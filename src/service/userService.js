@@ -23,6 +23,12 @@ const createUser = async (displayName, email, password, image) => {
   return tokenGenerate;
 };
 
+const getAllUser = async () => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  return users;
+};
+
 module.exports = {
   createUser,
+  getAllUser,
 };
