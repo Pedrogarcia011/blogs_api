@@ -11,7 +11,8 @@ const validateToken = (req, res, next) => {
   }
 
   try {
-    jwt.verify(token.replace('Bearer ', ''), jwtSecret);
+    const users = jwt.verify(token.replace('Bearer ', ''), jwtSecret);
+    req.email = users.email;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Expired or invalid token' });

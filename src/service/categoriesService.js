@@ -20,7 +20,10 @@ const getAllCategory = async () => {
   return users;
 };
 
+const getByIdCategory = (id) => Category.findByPk(id);
+
 module.exports = {
   createCategory,
   getAllCategory,
+  getByIdCategory,
 };

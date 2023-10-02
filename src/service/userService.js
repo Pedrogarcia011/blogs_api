@@ -34,8 +34,15 @@ const getByIdUser = async (id) => {
   return users;
 };
 
+const userByEmail = async (email) => {
+  const userExist = await User.findOne({ where: { email } });
+
+  return userExist;
+};
+
 module.exports = {
   createUser,
   getAllUser,
   getByIdUser,
+  userByEmail,
 };
