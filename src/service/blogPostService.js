@@ -1,4 +1,4 @@
-const { BlogPost } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 
 const blogPostCreate = (title, content, id) => {
   const data = new Date();
@@ -12,6 +12,26 @@ const blogPostCreate = (title, content, id) => {
   return newBlogPost;
 };
 
+const getByIdBlogPost = (id) => {
+  const posts = BlogPost.findByPk(id, {
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      {
+        model: Category,
+        as: 'categories',
+        attributes: { exclude: ['PostCategory'] },
+        through: { attributes: [] },
+      },
+    ],
+  });
+  return posts;
+};
+
 module.exports = {
   blogPostCreate,
+  getByIdBlogPost,
 };
