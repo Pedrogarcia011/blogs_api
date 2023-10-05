@@ -50,8 +50,32 @@ const getByIdBlogPost = async (req, res) => {
   }
 };
 
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const { email } = req;
+  console.log(email);
+
+  try {
+    const user = await UserService.userByEmail(email);
+    await PostService.updatePost(id, user.id, { title, content });
+
+    const updatedPost = await BlogPost.getByIdBlogPost(id);
+    return res.status(200).json(updatedPost);
+  } catch (error) {
+    if (error.message === 'Unauthorized user') {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+    if (error.message === 'Post not found') {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+};
+
 module.exports = {
   createPost,
   getAllPost,
   getByIdBlogPost,
+  updatePost,
 };

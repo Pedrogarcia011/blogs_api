@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { ValidateToken, PostValidate } = require('../middleware');
+const { ValidateToken, PostValidate, UpdateValidate } = require('../middleware');
 
 const { PostController } = require('../controller');
 
@@ -23,6 +23,13 @@ router.get(
   '/:id',
   ValidateToken,
   PostController.getByIdBlogPost,
+);
+
+router.put(
+  '/:id',
+  ValidateToken,
+  UpdateValidate,
+  PostController.updatePost,
 );
 
 module.exports = router;
