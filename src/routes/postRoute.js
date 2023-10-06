@@ -32,4 +32,10 @@ router.put(
   PostController.updatePost,
 );
 
+router.delete(
+  '/:id',
+  ValidateToken,
+  PostController.blogPostDelete,
+);
+
 module.exports = router;
