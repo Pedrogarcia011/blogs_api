@@ -1,5 +1,5 @@
 const Jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { User, BlogPost, sequelize } = require('../models');
 
 const createUser = async (displayName, email, password, image) => {
   const userExist = await User.findOne({ where: { email } });
@@ -40,9 +40,20 @@ const userByEmail = async (email) => {
   return userExist;
 };
 
+const deleteUserAndDependentPosts = async (userId) => {
+  // Use a função `transaction` para lidar com a transação automaticamente
+  await sequelize.transaction(async (t) => {
+    // Passo 1: Identificar registros dependentes e excluí-los
+    await BlogPost.destroy({ where: { userId }, transaction: t });
+
+    // Passo 2: Excluir o usuário
+    await User.destroy({ where: { id: userId }, transaction: t });
+  });
+};
 module.exports = {
   createUser,
   getAllUser,
   getByIdUser,
   userByEmail,
+  deleteUserAndDependentPosts,
 };

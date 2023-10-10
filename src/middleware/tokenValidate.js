@@ -12,6 +12,7 @@ const validateToken = (req, res, next) => {
 
   try {
     const users = jwt.verify(token.replace('Bearer ', ''), jwtSecret);
+    console.log(users);
     if (users.userId) {
       req.userId = users.userId; // Configura o userId na solicitação
     }

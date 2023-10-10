@@ -23,8 +23,22 @@ const getByIdUser = async (req, res) => {
   return res.status(200).json(user);
 };
 
+const userDelete = async (req, res) => {
+  try {
+    const { userId } = req.params; // ou qualquer outra maneira de obter o userId
+
+    // Chama a função de serviço para excluir o usuário e seus registros dependentes
+    await UserService.deleteUserAndDependentPosts(userId);
+
+    return res.status(204).json({ message: 'Usuário excluído com sucesso.' });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createUser,
   getAllUser,
   getByIdUser,
+  userDelete,
 };
