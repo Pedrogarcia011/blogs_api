@@ -50,7 +50,7 @@ Bem-vindo ao Blogs API, uma plataforma robusta e flexível para gerenciamento de
 ## Tecnologias Utilizadas:
   - Node.js
   - Docker
-  - Expressar
+  - Express
   - MySQL
   - Sequelize
   - JWT (Tokens da Web JSON)
